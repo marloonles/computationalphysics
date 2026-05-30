@@ -1,0 +1,72 @@
+\documentclass[aps,prl,reprint]{revtex4-2}
+\usepackage{graphicx} 
+\usepackage[pdfencoding=auto, psdextra]{hyperref} 
+\hypersetup{
+    colorlinks=true,
+    pdfstartview=FitH,
+    }
+\usepackage{tabularx}
+\usepackage{booktabs}
+\newcolumntype{N}{>{\centering\arraybackslash}p{1.0cm}}
+
+\begin{document}
+\title{Modeling Protein Secondary Structure Folding Using Mass-Spring Systems on MATLAB}
+\author{Marlene McKinney}
+\email{marlene777mck@gmail.com}
+\affiliation{CUNY The City College of New York}
+  
+\begin{abstract}
+Protein secondary structure prediction remains a foundational challenge in computational biology, with experimental methods such as cryo-electron microscopy and X-ray crystallography limited by time-intensive purification requirements. This study presents a mass-spring system model implemented in MATLAB to simulate secondary structure formation in short peptide sequences, integrating amino acid pairwise affinities and propensities for alpha-helix and random coil formation. Ten hormones and microproteins containing fewer than 100 residues were selected for analysis, and predicted structures were compared against experimentally determined structures from the Protein Data Bank (PDB). Evaluation metrics include the percentage of residues correctly classified as random coils or loops, prediction accuracy as a function of residue composition (aliphatic, polar, and charged), and prediction accuracy differences between middle and end residues. It was found that the model is most accurate for residues in the middle of the peptide's sequence and had better prediction for structures with larger amounts of residues and approximately 50 $\%$ nonpolar residues. This work aims to clarify which physical forces and protein properties most significantly govern folding outcomes, with broader implications for optimizing computational design pipelines for biologics and engineered proteins.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+The current state of the art for finding structures of complex protein structures includes cryostat electron microscopy and x-ray crystallography. These methods lead to structures with high accuracy, but they often take long periods of time as they require high enough concentrations of purified protein for measurements. Protein purification, especially for large mammalian structures with post-translational modifications, can be delicate and time-consuming. This problem becomes exacerbated as de novo structures have come from the rise of protein engineering. Intensive algorithms like the one used by AlphaFold have been formulated to bring together the numerous interactions that result in protein folding. Amino acid interactions are complicated, and knowing the most important forces involved can help demystify the complexity of protein folding mechanisms. This problem is important as knowing the most integral forces in protein folding can help further optimize simulations and machine learning predictions for designed proteins to ensure that design candidates can be better identified. Designed proteins are now being engineered using these algorithms to look at binding capacity for different ligands, making it increasingly significant to know if structures are likely to fold properly or have compatible structures for the different uses for peptides like biologics or agents of energy conservation.
+
+\section{Methods}
+A MATLAB script bringing together affinity of amino acids to one another and propensity to form alpha helices and random coils was used to predict rough secondary structure formation for given sequences. The modeling utilized ball and spring interactions to predict how amino acidds would bend in restricted ways due to the nature of peptide bonds. This study will look at 10 peptides with less than 100 amino acids/residues classified as hormones or microproteins; the structures from the MATLAB prediction will be compared to the Protein Data Bank (PDB) structures that have been obtained using standard experimental methods to quantify the following parameters: percentage of residues correctly predicted to be in random coils or loops, accuracy of the prediction as a function of the percent residue composition (aliphatic vs. polar vs charged), and comparison of prediction accuracy between residues at the ends and the middle of the sequence.
+
+\section{Results}
+The middle and end residue numbers were determined using interquartile ranges, and the following are the determinations for each of the residue types:
+
+Nonpolar: A, F, G, I, L, M, P, V, W
+
+Polar: C, H, N, Q, S, T, Y
+
+Charged: D, E, K, R.
+
+\begin{table*}[htbp]
+\centering
+\caption{Predicted vs.\ experimental secondary structure accuracy for 10 peptides.}
+\label{tab:protein_accuracy}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{X N N N N N N N N N N N}
+\toprule
+Protein & Length & \# Nonpolar & \# Polar & \# Charged & \% Nonpolar & \% Polar & \% Charged & \# Loops & Avg.\ Loop Accuracy (\%) & Ends Accuracy (\%) & Middle Accuracy (\%) \\
+\midrule
+Small integral membrane protein 22       & 83 & 44 & 22 & 17 & 53.01 & 26.51 & 20.48 & 5 & 34.76 &  7.94 & 75.00 \\
+Glucagon                                 & 29 &  9 & 14 &  6 & 31.03 & 48.28 & 20.69 & 2 &  0.00 &  0.00 & \ldots \\
+IAPP                                     & 89 & 43 & 32 & 14 & 48.31 & 35.96 & 15.73 & 8 & 26.78 &  0.00 & 53.56 \\
+Humanin                                  & 24 & 14 &  4 &  6 & 58.33 & 16.67 & 25.00 & 2 &  0.00 &  0.00 & \ldots \\
+Cytochrome c oxidase subunit FA4L3       & 83 & 44 & 20 & 19 & 53.01 & 24.10 & 22.89 & 5 & 30.48 & 13.10 & 100.00 \\
+AltMIEF1                                 & 70 & 32 & 13 & 25 & 45.71 & 18.57 & 35.71 & 4 & 61.16 & 43.75 & 78.57 \\
+Apelin receptor early endogenous ligand  & 54 & 30 & 14 & 10 & 55.56 & 25.93 & 18.52 & 4 & 65.00 & 50.00 & 80.00 \\
+DWORF                                    & 35 & 26 &  7 &  2 & 74.29 & 20.00 &  5.71 & 1 & 100.00 & 100.00 & \ldots \\
+Mitoregulin                              & 56 & 28 & 11 & 17 & 50.00 & 19.64 & 30.36 & 2 &  0.00 &  0.00 & \ldots \\
+Sarcolipin                               & 31 & 19 &  9 &  3 & 61.29 & 29.03 &  9.68 & 2 & 18.75 & 18.75 & \ldots \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\section{Conclusion and Future Research}
+Proteins with residues in the middle of the peptide's sequence had the highest prediction accuracy using the model. The model also had better prediction for structures with larger amounts of residues (at least 40) and approximately 50 $\%$ nonpolar residues in the sequence. Smaller structures ended up potentially lacking repulsion forces, causing much webbier structures in the predictions, leading to the extremely low accuracies, which may also account for those within the end loops.
+
+\section{Acknowledgements}
+Special thank yous to Professor Mark Shattuck for his teaching of the CCNY Computational Physics course, Professor Ronald Koder for his guidance in my overall laboratory research and independent project, Dr. Paul Molinaro for his guidance in mentoring my progression in biophysical laboratory procedures and to the CCNY Physics Department for support during my undergraduate years.
+
+\section{Code}
+The matlab code for the model and the raw protein analysis data can be found on \href{https://github.com/marloonles/computationalphysics}{GitHub}.
+
+\end{document}
+      
